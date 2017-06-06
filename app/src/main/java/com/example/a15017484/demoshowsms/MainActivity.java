@@ -54,8 +54,16 @@ public class MainActivity extends AppCompatActivity {
                 //  query the content provider
                 ContentResolver cr = getContentResolver();
                 // Fetch SMS Message from Built-in Content Provider
-                Cursor cursor = cr.query(uri, reqCols, null, null, null);
+                // The filter String
+                String filter = "body LIKE ? AND body LIKE ?";
+                // The matches for the ?
+                String[] filterArgs = {"%late%", "%min%"};
+                // Fetch SMS Message from Built-in Content Provider
+
+                Cursor cursor = cr.query(uri, reqCols, filter, filterArgs, null);
+
                 String smsBody = "";
+
                 if (cursor.moveToFirst()) {
                     do {
                         long dateInMillis = cursor.getLong(0);
